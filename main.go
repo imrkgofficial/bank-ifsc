@@ -40,7 +40,6 @@ func main() {
 			w.Write(responseJSON)
 			return
 		}
-		
 
 		if data["error"] != nil {
 			w.Header().Set("Content-Type", "application/json")
@@ -59,5 +58,5 @@ func main() {
 		}
 	})
 
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(http.ListenAndServe(":3000", nil))
 }
