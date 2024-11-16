@@ -1,19 +1,46 @@
 version: 2.1
+
 orbs:
   aws-ecr: circleci/aws-ecr@9.3.6
 
 executors:
   default-ubuntu:
     machine:
-      image: default 
+      image: ubuntu-2004:202309-01
 
-workflows:
-  build_and_push_image:
-    jobs:
+jobs:
+  build:
+    docker:
+      - image: golang:1.23.3
+    steps:
+      - checkout
+      - run:
+          name: Install Dependencies
+          command: go mod tidy
+      - run:
+          name: Run Tests
+          command: go test ./...
+      - run:
+          name: Build Application
+          command: go build -o bank-ifsc main.go
+
+  deploy:
+    docker:
+      - image: golang:1.23.3
+    steps:
+      - checkout
       - aws-ecr/build-and-push-image:
-          executor: default-ubuntu
-          context: imrkgofficial
           create-repo: true
           repo: "${CIRCLE_PROJECT_REPONAME}"
           region: ${AWS_REGION}
           tag: "${CIRCLE_BUILD_NUM}"
+          context: imrkgofficial
+          
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
