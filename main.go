@@ -19,7 +19,11 @@ func main() {
 		ifsc := r.URL.Query().Get("ifsc")
 
 		if ifsc == "" {
-			http.Error(w, "IFSC code is required. Please provide a valid IFSC code.", http.StatusBadRequest)
+			errorResponse := map[string]string{"error": "IFSC code is required. Please provide a valid IFSC code."}
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(http.StatusOK)
+			responseJSON, _ := json.Marshal(errorResponse)
+			w.Write(responseJSON)
 			return
 		}
 
