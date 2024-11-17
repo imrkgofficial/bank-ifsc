@@ -8,7 +8,10 @@ import (
 )
 
 func main() {
-	http.Handle("/", http.FileServer(http.Dir("src")))
+	 http.Handle("/", http.FileServer(http.Dir("./src")))
+
+    log.Println("Server starting on port 3000, click and  go to http://localhost:3000")
+    log.Fatal(http.ListenAndServe(":3000", nil))
 
 	http.HandleFunc("/getBankDetails", func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodGet {
