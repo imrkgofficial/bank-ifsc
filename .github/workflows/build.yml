@@ -16,3 +16,24 @@ jobs:
         aws-secret-access-key: ${{ secrets.SECRET_ACCESS_KEY }}
         aws-region: ${{ secrets.REGION }}
         
+  build-and-push-pub-ecr:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Code Checkout
+      uses: actions/checkout@v4
+
+    - name: Login to AWSECR
+      uses: docker/login-action@v3
+      with:
+        registry: public.ecr.aws
+        username: ${{ secrets.ACCESS_KEY }}
+        password: ${{ secrets.SECRET_ACCESS_KEY }}
+      env:
+        aws-region: ${{ secrets.REGION }}
+    
+    - name: Build Image
+      run: |
+          docker build -t bank .
+          docker tag bank:latest public.ecr.aws/h8o8x8t1/bank:${BUILD_ID}
+          docker push public.ecr.aws/h8o8x8t1/bank:${BUILD_ID}
+      
