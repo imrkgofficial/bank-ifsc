@@ -18,6 +18,9 @@ jobs:
         
   build-and-push-pub-ecr:
     runs-on: ubuntu-latest
+    needs:
+      login-to-aws:
+      
     steps:
     - name: Code Checkout
       uses: actions/checkout@v4
@@ -34,6 +37,5 @@ jobs:
     - name: Build Image
       run: |
           docker build -t bank .
-          docker tag bank:latest public.ecr.aws/h8o8x8t1/bank:${BUILD_ID}
-          docker push public.ecr.aws/h8o8x8t1/bank:${BUILD_ID}
-      
+          docker tag bank:latest public.ecr.aws/h8o8x8t1/bank:v1
+          docker push public.ecr.aws/h8o8x8t1/bank:v1
