@@ -22,14 +22,14 @@ jobs:
     - name: Code Checkout
       uses: actions/checkout@v4
 
-    - name: Login to AWSECR
+    - name: Login to AWSECR                                                                                                                                                                                                                                                                                            
       uses: docker/login-action@v3
       with:
         registry: public.ecr.aws
         username: ${{ secrets.ACCESS_KEY }}
         password: ${{ secrets.SECRET_ACCESS_KEY }}
       env:
-        aws-region: ${{ secrets.REGION }}
+        aws-region: ${{ secrets.PUBLIC_REGION }}
     
     - name: Build Image
       run: |
