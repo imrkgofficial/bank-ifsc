@@ -30,6 +30,8 @@ jobs:
         registry: public.ecr.aws
         username: ${{ secrets.ACCESS_KEY }}
         password: ${{ secrets.SECRET_ACCESS_KEY }}
+      env:
+        aws-region: ${{ secrets.PUBLIC_REGION }}
 
     - name: Build and Push Image
       run: |
