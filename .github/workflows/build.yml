@@ -36,5 +36,28 @@ jobs:
     - name: Build and Push Image
       run: |
         docker build -t bank .
-        docker tag bank:latest public.ecr.aws/h8o8x8t1/bank:v1
-        docker push public.ecr.aws/h8o8x8t1/bank:v1
+        docker tag bank:latest public.ecr.aws/h8o8x8t1/bank:v11
+        docker push public.ecr.aws/h8o8x8t1/bank:v11
+
+  build-and-push-private-ecr:
+    runs-on: ubuntu-latest
+    needs:  build-and-push-pub-ecr
+
+    steps:
+    - name: Code Checkout
+      uses: actions/checkout@v4
+
+    - name: Login to AWS ECR
+      uses: docker/login-action@v3
+      with:
+        registry: 637423205071.dkr.ecr.ap-south-1.amazonaws.com
+        username: ${{ secrets.ACCESS_KEY }}
+        password: ${{ secrets.SECRET_ACCESS_KEY }}
+      env:
+        aws-region: ${{ secrets.REGION }}
+
+    - name: Build and Push Image
+      run: |
+        docker build -t bank .
+        docker tag bank:latest 637423205071.dkr.ecr.ap-south-1.amazonaws.com/bank:v11
+        docker push 637423205071.dkr.ecr.ap-south-1.amazonaws.com/bank:latest
