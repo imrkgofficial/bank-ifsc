@@ -1,37 +1,19 @@
 version: 2.1
+orbs:
+  aws-ecr: circleci/aws-ecr@8.1.2
 
-jobs:
-  build:
-    docker:
-      - image: golang:1.23.3
-    steps:
-      - checkout
-      - run:
-          name: Install Dependencies
-          command: go mod tidy
-      - run:
-          name: Run Tests
-          command: go test ./...
-      - run:
-          name: Build Application
-          command: go build -o bank-ifsc main.go
-
-  deploy:
-    docker:
-      - image: golang:1.23.3
-    steps:
-      - checkout
-      - run:
-          name: Deploy Application
-          command: |
-            echo "Deploying application..."
-            # Add your deployment steps here (e.g., deploy with Docker/Portainer)
+executors:
+  default-ubuntu:
+    machine:
+      image: default 
 
 workflows:
-  version: 2
-  build_and_deploy:
+  build_and_push_image:
     jobs:
-      - build
-      - deploy:
-          requires:
-            - build
+      - aws-ecr/build-and-push-image:
+          executor: default-ubuntu
+          context: imrkgofficial
+          create-repo: true
+          repo: "${CIRCLE_PROJECT_REPONAME}"
+          region: ${AWS_REGION}
+          tag: "${CIRCLE_BUILD_NUM}"
