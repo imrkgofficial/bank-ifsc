@@ -29,7 +29,7 @@ jobs:
       with:
         registry: 637423205071.dkr.ecr.ap-south-1.amazonaws.com
         username: AWS
-        password: ${{ secrets.PVT_ECR_PASSWORD }}
+        password: ${{ secrets.PVT_UPDATE_ECR_PASSWORD }}
 
     - name: Build and Push Image
       run: |
