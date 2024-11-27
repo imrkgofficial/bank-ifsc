@@ -14,7 +14,7 @@ jobs:
       with:
         aws-access-key-id: ${{ secrets.ACCESS_KEY }}
         aws-secret-access-key: ${{ secrets.SECRET_ACCESS_KEY }}
-        aws-region: ${{ secrets.REGION }}
+        aws-region: ${{ secrets.PUBLIC_REGION }}
         
   build-and-push-pub-ecr:
     runs-on: ubuntu-latest
@@ -30,6 +30,8 @@ jobs:
         registry: public.ecr.aws
         username: ${{ secrets.ACCESS_KEY }}
         password: ${{ secrets.SECRET_ACCESS_KEY }}
+      env:
+        aws-region: ${{ secrets.PUBLIC_REGION }}
 
     - name: Build and Push Image
       run: |
