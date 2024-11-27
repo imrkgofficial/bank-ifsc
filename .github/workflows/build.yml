@@ -34,5 +34,5 @@ jobs:
       - name: Build and Push Image
         run: |
           docker build -t bank .
-          docker tag bank:latest 637423205071.dkr.ecr.ap-south-1.amazonaws.com/bank:latest
-          docker push 637423205071.dkr.ecr.ap-south-1.amazonaws.com/bank:latest
+          docker tag bank:latest 637423205071.dkr.ecr.ap-south-1.amazonaws.com/bank:v2
+          docker push 637423205071.dkr.ecr.ap-south-1.amazonaws.com/bank:v2
