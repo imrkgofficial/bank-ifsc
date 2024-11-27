@@ -28,9 +28,10 @@ jobs:
       uses: aws-actions/amazon-ecr-login@v2
       with:
         registry-type: public
+        aws-region: ${{ secrets.PUBLIC_REGION }}
 
     - name: Build and Push Image to Public ECR
       run: |
         docker build -t bank .
-        docker tag bank:latest public.ecr.aws/h8o8x8t1/bank:v3
-        docker push public.ecr.aws/h8o8x8t1/bank:v3
+        docker tag bank:latest public.ecr.aws/h8o8x8t1/bank:v1
+        docker push public.ecr.aws/h8o8x8t1/bank:v1
