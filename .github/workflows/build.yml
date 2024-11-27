@@ -23,9 +23,10 @@ jobs:
     steps:
       - name: Code Checkout
         uses: actions/checkout@v4
+
       - name: Login to AWS ECR
         run: |
-          echo ${{ secrets.PVT_ECR_PASSWORD }} | docker login --username AWS --password-stdin 637423205071.dkr.ecr.ap-south-1.amazonaws.com
+          aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 637423205071.dkr.ecr.ap-south-1.amazonaws.com
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
