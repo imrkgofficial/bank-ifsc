@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	log.Println("Server is starting on port 10001...")
+	log.Println("Server is starting on port 80...")
 	http.Handle("/", http.FileServer(http.Dir("src")))
 
 	http.HandleFunc("/getBankDetails", func(w http.ResponseWriter, r *http.Request) {
@@ -75,7 +75,7 @@ func main() {
 	})
 
 	// Log that the application has started and is running
-	log.Println("Application is started and running on port 10001")
+	log.Println("Application is started and running on port 80")
 
-	log.Fatal(http.ListenAndServe(":10001", nil))
+	log.Fatal(http.ListenAndServe(":80", nil))
 }
