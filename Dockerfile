@@ -32,7 +32,7 @@ COPY --from=builder /app/app /app/
 COPY --from=builder /app/src /app/src
 
 # Expose the port your application will listen on
-EXPOSE 10001
+EXPOSE 80
 
 # Run the Go application
 CMD ["/app/app"]
